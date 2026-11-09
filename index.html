@@ -1,0 +1,439 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Mentis Veritas is an independent AI consultancy: AI guidance and custom systems for companies of every size.">
+<title>Mentis Veritas</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,500;9..144,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+  /* Black, open, unboxed. One accent (blue) for the mark, labels and highlights; no cards or frames, just type, hairlines and space. */
+  :root {
+    --bg: #000000; --bg-2: #111113; --card: #161618; --fg: #ffffff; --fg-2: #d0d0d5; --rule: #2e2e33;
+    --accent: #7fa6e0; --accent-soft: #14213a; --accent-ink: #000000;
+    --shadow: 0 1px 2px rgba(0,0,0,.4), 0 8px 24px rgba(0,0,0,.5);
+    --r: 14px; color-scheme: dark;
+    --display: "Fraunces", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+    --body: "IBM Plex Sans", "Segoe UI", Helvetica, Arial, sans-serif;
+    --mono: "IBM Plex Mono", "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-padding-top: 4rem; }
+  body { margin: 0; background: var(--bg); color: var(--fg); font-family: var(--body); font-size: 18px; line-height: 1.65; -webkit-font-smoothing: antialiased; }
+  a { color: inherit; }
+  .wrap { max-width: 78ch; margin: 0 auto; padding-left: max(20px, env(safe-area-inset-left, 0px)); padding-right: max(20px, env(safe-area-inset-right, 0px)); }
+
+  /* Header: a thin, translucent bar; small mark at left, evenly spaced small text links, one quiet icon at right. Static on every screen size. */
+  .site-header { position: sticky; top: 0; z-index: 10; background: rgba(0,0,0,.8); -webkit-backdrop-filter: saturate(180%) blur(20px); backdrop-filter: saturate(180%) blur(20px); padding-top: env(safe-area-inset-top, 0px); }
+  .site-header .wrap { max-width: 1024px; height: 48px; display: flex; align-items: center; justify-content: space-between; gap: 0; }
+  .brand { display: flex; align-items: center; text-decoration: none; opacity: .9; }
+  .brand:hover { opacity: 1; }
+  .mark { width: 22px; height: 22px; flex: none; }
+  .brand-name { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  nav.primary { display: flex; flex: 1; justify-content: space-evenly; align-items: center; margin: 0 1.5rem; }
+  nav.primary a { font-size: 12px; font-weight: 400; letter-spacing: -.01em; text-decoration: none; color: var(--fg); opacity: .8; padding: 0 .25rem; line-height: 48px; transition: opacity .2s ease; }
+  nav.primary a:hover, nav.primary a[aria-current="true"] { opacity: 1; }
+  .hdr-icon { display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; color: var(--fg); opacity: .8; }
+  .hdr-icon:hover { opacity: 1; }
+  /* Phones: the header stays static. The mark and mail icon share the top row; the six links sit in a second thin row, always visible, never a menu. */
+  @media (max-width: 760px) {
+    .site-header .wrap { height: auto; flex-wrap: wrap; padding-top: 2px; }
+    .brand, .hdr-icon { height: 40px; }
+    .hdr-icon { order: 2; }
+    nav.primary { order: 3; flex: 1 0 100%; margin: 0; justify-content: space-between; gap: .25rem; height: 32px; }
+    nav.primary a { font-size: 11px; line-height: 32px; padding: 0; letter-spacing: 0; white-space: nowrap; }
+    html { scroll-padding-top: 6rem; }
+  }
+
+  main { display: flex; flex-direction: column; padding-block: 3.5rem 4.5rem; }
+  section > .wrap { display: flex; flex-direction: column; gap: 1.5rem; }
+  .eyebrow { font-family: var(--body); font-size: .8rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--accent); margin: 0; }
+  h1 { font-family: var(--display); font-weight: 300; font-size: clamp(3rem, 9vw, 5.2rem); line-height: 1; letter-spacing: -.015em; margin: 0; text-wrap: balance; font-variation-settings: "opsz" 144; }
+  h2 { font-family: var(--display); font-weight: 400; font-size: clamp(1.75rem, 4vw, 2.4rem); line-height: 1.15; margin: 0; text-wrap: balance; letter-spacing: -.005em; }
+  h3 { font-family: var(--display); font-weight: 500; font-size: 1.2rem; line-height: 1.3; margin: 0; }
+  p { margin: 0; }
+  .lede { font-size: 1.2rem; color: var(--fg-2); max-width: 60ch; }
+  .lede strong { color: var(--fg); font-weight: 500; display: block; margin-bottom: .5rem; font-size: 1.25rem; line-height: 1.35; }
+  .muted { color: var(--fg-2); font-size: 1.1rem; }
+
+  /* Logo stage: the whole first screen is the animated mark */
+  .logo-stage { min-height: calc(100svh - 82px - env(safe-area-inset-top, 0px)); place-items: center; position: relative; margin-top: -3.5rem; }
+  .logo { width: min(46vw, 260px); height: auto; display: block; position: relative; z-index: 1; filter: drop-shadow(0 0 18px rgba(127,166,224,.35)); }
+  .logo-stage::before { content: ""; position: absolute; left: 50%; top: 50%; width: min(90vw, 620px); aspect-ratio: 1; transform: translate(-50%, -50%); border-radius: 50%; pointer-events: none;
+    background: radial-gradient(circle, rgba(127,166,224,.38) 0%, rgba(127,166,224,.16) 28%, rgba(43,76,126,.08) 48%, transparent 68%); filter: blur(10px); opacity: 0; animation: glowin 2s ease 1s forwards; }
+  @keyframes glowin { to { opacity: 1; } }
+  .scroll-cue { position: absolute; bottom: 1.5rem; left: 50%; transform: translateX(-50%); color: var(--fg-2); padding: .5rem; border-radius: 999px; opacity: 0; animation: fadein .8s ease 2.6s forwards; }
+  .scroll-cue:hover { color: var(--fg); background: var(--bg-2); }
+  @keyframes fadein { to { opacity: 1; } }
+  @media (prefers-reduced-motion: no-preference) {
+    .ring { stroke-dasharray: 600; stroke-dashoffset: 600; animation: draw 1.6s cubic-bezier(.4,0,.2,1) forwards; transform-origin: 100px 100px; transform: rotate(-90deg); }
+    .ring-inner { animation-delay: .25s; }
+    .ticks { opacity: 0; animation: fadein .6s ease 1.2s forwards; }
+    .hub { transform-origin: 100px 100px; transform: scale(0); animation: pop .5s cubic-bezier(.2,.8,.2,1.4) 1.1s forwards; }
+    .needle-big { transform-origin: 100px 100px; transform: rotate(-120deg); opacity: 0; animation: swing 1.8s cubic-bezier(.2,.8,.2,1) 1.3s forwards, breathe 6s ease-in-out 3.2s infinite; }
+    .scroll-cue svg { animation: bob 2s ease-in-out infinite; }
+    .logo { animation: float 7s ease-in-out 3s infinite; }
+    .logo-stage::before { animation: glowin 2s ease 1s forwards, pulse 7s ease-in-out 3s infinite; }
+    @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
+    @keyframes pulse { 0%, 100% { opacity: 1; transform: translate(-50%, -50%) scale(1); } 50% { opacity: .8; transform: translate(-50%, -50%) scale(1.06); } }
+    @keyframes draw { to { stroke-dashoffset: 0; } }
+    @keyframes pop { to { transform: scale(1); } }
+    @keyframes swing { 0% { opacity: 0; transform: rotate(-120deg); } 15% { opacity: 1; } 70% { transform: rotate(10deg); } 100% { opacity: 1; transform: rotate(0deg); } }
+    @keyframes breathe { 0%, 100% { transform: rotate(0deg); } 50% { transform: rotate(-4deg); } }
+    @keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(4px); } }
+  }
+  @media (prefers-reduced-motion: reduce) { .scroll-cue { opacity: 1; } }
+
+  /* Pages: one view at a time, chosen by the URL hash */
+  .page { display: none; }
+  .page.active { display: block; animation: pagein .35s ease; }
+  .page.logo-stage.active { display: grid; }
+  @keyframes pagein { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+  @media (prefers-reduced-motion: reduce) { .page.active { animation: none; } }
+  main { min-height: calc(100svh - 48px - 12rem); }
+
+  /* Sub pages are centred: headings, intros, tabs and buttons sit on the centre line; cards, tables and lists stay readable left-aligned inside centred blocks. */
+  .page:not(.logo-stage) > .wrap { align-items: center; text-align: center; }
+  .page:not(.logo-stage) .lede, .page:not(.logo-stage) .intro, .page:not(.logo-stage) .note { margin-left: auto; margin-right: auto; }
+  .page:not(.logo-stage) .lede strong { margin-left: auto; margin-right: auto; }
+  .page:not(.logo-stage) .actions { justify-content: center; }
+  .panel, .table-wrap, .steps, .grid, .faq-list, .status { width: 100%; text-align: left; }
+  .grid { text-align: center; }
+  .panel > .intro { text-align: center; }
+  .status { align-items: center; text-align: center; }
+  .contact { justify-content: center; }
+  .steps li div { text-align: left; }
+
+  /* Statement at the top of About */
+  .hero { padding-block: clamp(1.5rem, 6vw, 4rem) 0; }
+  .hero .wrap { gap: 1.75rem; }
+  .hero h1 { font-size: clamp(3.4rem, 11vw, 6.5rem); }
+  .hero .lede { font-size: 1.2rem; max-width: 52ch; }
+  .hero .lede strong { font-size: 1.35rem; }
+  .hero h2 { margin-top: 2.5rem; }
+  .actions { display: flex; gap: .75rem; flex-wrap: wrap; }
+  /* Floating buttons and tabs: bare text, no fill or frame; a blue backlight glow when hovered, focused or active. */
+  .btn, .tabs button { position: relative; isolation: isolate; font: 500 1rem var(--body); text-decoration: none; padding: .7rem 1.25rem; border-radius: 999px; border: 0; background: transparent; color: var(--fg); cursor: pointer; transition: transform .18s ease, text-shadow .18s ease, color .18s ease, opacity .18s ease; opacity: .85; }
+  /* The haze: a blurred blue cloud floating behind the text, no edge, only visible on highlight */
+  .btn::before { content: ""; position: absolute; inset: -40% -22%; z-index: -1; border-radius: 999px; background: radial-gradient(ellipse at center, rgba(127,166,224,.55) 0%, rgba(127,166,224,.22) 45%, transparent 72%); filter: blur(10px); opacity: 0; transform: scale(.85); transition: opacity .22s ease, transform .22s ease; pointer-events: none; }
+  .btn:hover::before, .btn:focus-visible::before { opacity: 1; transform: scale(1); }
+  .btn:hover, .btn:focus-visible { transform: translateY(-1px); color: #fff; opacity: 1; text-shadow: 0 0 10px rgba(127,166,224,.8), 0 0 24px rgba(127,166,224,.45); }
+  .btn.primary { color: var(--accent); opacity: 1; }
+  .btn.primary:hover, .btn.primary:focus-visible { color: #fff; }
+  .btn:active, .tabs button:active { transform: translateY(0); }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  .btn:focus-visible, .tabs button:focus-visible { outline: none; }
+
+  /* Tabs: plain text that behaves like the header links; the selected tab is simply at full brightness */
+  .tabs { display: flex; flex-wrap: wrap; justify-content: center; gap: .6rem; align-self: center; max-width: 100%; }
+  .tabs button { font-size: 1rem; color: var(--fg); opacity: .6; padding: .6rem 1.1rem; white-space: nowrap; transition: opacity .2s ease; }
+  .tabs button:hover, .tabs button:focus-visible, .tabs button[aria-selected="true"] { opacity: 1; }
+  .panel { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
+  .panel[hidden] { display: none; }
+  .panel > .intro { grid-column: 1 / -1; display: flex; flex-direction: column; gap: .6rem; padding-bottom: .25rem; }
+  .panel .col { padding: .5rem .25rem; }
+  .panel .col h4 { font-family: var(--body); font-size: .8rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--accent); margin: 0 0 .75rem; }
+  .panel .col p { color: var(--fg-2); font-size: 1.05rem; line-height: 1.7; }
+  @media (max-width: 640px) { .panel { grid-template-columns: 1fr; } }
+
+  /* Tables: open, hairline rows, no card */
+  .table-wrap { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; font-size: 1.02rem; }
+  th, td { text-align: left; vertical-align: top; padding: 1rem 1rem 1rem 0; border-bottom: 1px solid rgba(255,255,255,.12); }
+  tbody tr:last-child td { border-bottom: 1px solid rgba(255,255,255,.12); }
+  
+  th { font-family: var(--body); font-size: .8rem; letter-spacing: .06em; text-transform: uppercase; color: var(--accent); font-weight: 600; }
+  td strong { font-weight: 600; }
+  td.k { color: var(--fg-2); white-space: nowrap; }
+
+  /* Steps */
+  .steps { list-style: none; margin: 0 auto; padding: 0; counter-reset: step; display: grid; gap: .25rem; max-width: 40rem; }
+  .steps li { display: grid; grid-template-columns: 2.6rem 1fr; gap: 1.1rem; align-items: start; padding: 1rem 0; counter-increment: step; }
+  .steps li::before { content: counter(step); display: grid; place-items: center; width: 2.4rem; height: 2.4rem; border-radius: 999px; background: var(--accent-soft); color: var(--accent); font: 600 .95rem var(--body); }
+  .steps li p { color: var(--fg-2); margin-top: .3rem; font-size: 1.05rem; }
+
+  /* Principles grid */
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr)); gap: 1.25rem 2rem; }
+  .card { padding: .75rem .25rem; display: flex; flex-direction: column; gap: .4rem; }
+  .card h3 { color: var(--accent); font-family: var(--body); font-weight: 600; font-size: 1.05rem; }
+  .card p { color: var(--fg-2); font-size: 1.05rem; }
+
+  /* FAQ */
+  .faq-list { display: grid; gap: 0; max-width: 44rem; margin: 0 auto; }
+  details { border-bottom: 1px solid rgba(255,255,255,.12); padding: 0; }
+  details:first-of-type { border-top: 1px solid rgba(255,255,255,.12); }
+  summary { cursor: pointer; padding: 1.1rem 0; font-weight: 500; font-size: 1.1rem; list-style: none; display: flex; justify-content: space-between; gap: 1rem; }
+  summary::-webkit-details-marker { display: none; }
+  summary::after { content: "+"; color: var(--accent); font-weight: 500; font-size: 1.2rem; line-height: 1; }
+  details[open] summary::after { content: "−"; }
+  details p { color: var(--fg-2); padding-bottom: 1.2rem; font-size: 1.05rem; }
+
+  /* Contact */
+  .status { padding: clamp(1rem, 4vw, 2rem) 0; display: flex; flex-direction: column; gap: 1.1rem; }
+  .contact { display: flex; align-items: center; gap: .75rem; flex-wrap: wrap; }
+  .contact code { font-family: var(--mono); font-size: 1.05rem; color: #fff; background: none; border: 0; padding: .7rem .5rem; user-select: all; }
+  .note { font-size: 1rem; color: var(--fg-2); }
+
+  footer { padding-block: 1.75rem 3rem; font-size: .9rem; color: var(--fg-2); }
+  footer .wrap { display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+  footer nav { display: flex; gap: 1.1rem; flex-wrap: wrap; }
+  footer a { text-decoration: none; }
+  footer a:hover { color: var(--fg); }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .needle { transform-origin: 20px 20px; animation: settle 2.4s cubic-bezier(.2,.8,.2,1) 1 both; }
+    @keyframes settle { from { transform: rotate(-70deg); } 60% { transform: rotate(8deg); } to { transform: rotate(0deg); } }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="#home" aria-label="Mentis Veritas home">
+      <svg class="mark" viewBox="0 0 40 40" aria-hidden="true">
+        <circle cx="20" cy="20" r="18" fill="none" stroke="var(--fg)" stroke-width="1.5"/>
+        <circle cx="20" cy="20" r="2" fill="var(--fg)"/>
+        <g class="needle">
+          <path d="M20 4 L23.2 20 L20 23 L16.8 20 Z" fill="var(--accent)"/>
+          <path d="M20 36 L16.8 20 L20 17 L23.2 20 Z" fill="#3a3a40"/>
+        </g>
+      </svg>
+      <span class="brand-name">Mentis Veritas</span>
+    </a>
+    <nav class="primary" id="primary-nav" aria-label="Sections">
+      <a href="#services">Services</a>
+      <a href="#engagements">Engagements</a>
+      <a href="#process">How we work</a>
+      <a href="#about">About</a>
+      <a href="#faq">FAQ</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <a class="hdr-icon" href="#contact" aria-label="Contact">
+      <svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 6.5 12 13l8.5-6.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+    </a>
+  </div>
+</header>
+
+<main>
+
+  <section id="home" class="page logo-stage" aria-label="Mentis Veritas">
+    <!-- Placeholder mark until the final logo is ready. Swap the SVG below for the real logo; keep the class names so the animation still applies. -->
+    <svg class="logo" viewBox="0 0 200 200" role="img" aria-labelledby="logo-title">
+      <title id="logo-title">Mentis Veritas</title>
+      <circle class="ring ring-outer" cx="100" cy="100" r="86" fill="none" stroke="var(--fg)" stroke-width="2"/>
+      <circle class="ring ring-inner" cx="100" cy="100" r="62" fill="none" stroke="var(--rule)" stroke-width="1.5"/>
+      <g class="ticks" stroke="var(--fg-2)" stroke-width="1.5" stroke-linecap="round">
+        <line x1="100" y1="10" x2="100" y2="20"/><line x1="190" y1="100" x2="180" y2="100"/>
+        <line x1="100" y1="190" x2="100" y2="180"/><line x1="10" y1="100" x2="20" y2="100"/>
+      </g>
+      <g class="needle-big">
+        <path d="M100 30 L112 100 L100 112 L88 100 Z" fill="var(--accent)"/>
+        <path d="M100 170 L88 100 L100 88 L112 100 Z" fill="#3a3a40"/>
+      </g>
+      <circle class="hub" cx="100" cy="100" r="6" fill="var(--fg)"/>
+    </svg>
+    <a class="scroll-cue" href="#services" aria-label="Enter the site">
+      <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+  </section>
+
+  <section id="services" class="page" aria-labelledby="services-h">
+    <div class="wrap">
+      <p class="eyebrow">Services</p>
+      <h2 id="services-h">Two things we do, and one way we keep them honest.</h2>
+      <div class="tabs" role="tablist" aria-label="Services">
+        <button role="tab" id="tab-guidance" aria-selected="true" aria-controls="panel-guidance">Guidance</button>
+        <button role="tab" id="tab-systems" aria-selected="false" aria-controls="panel-systems" tabindex="-1">Custom systems</button>
+        <button role="tab" id="tab-verify" aria-selected="false" aria-controls="panel-verify" tabindex="-1">Verify</button>
+      </div>
+
+      <div class="panel" role="tabpanel" id="panel-guidance" aria-labelledby="tab-guidance">
+        <div class="intro">
+          <h3>Independent AI guidance</h3>
+          <p class="muted">Plain answers on what AI should do in your business, what it should not touch, and what each option would cost and save. No vendor to sell you, no platform to push. Scaled to your size and budget, from a two-hour working session to a full roadmap.</p>
+        </div>
+        <div class="col"><h4>What you get</h4><p>An AI readiness and opportunity review of your operations, then a ranked list of use cases with the cost, saving and risk of each. We give vendor, model and build-versus-buy recommendations, a risk, privacy and regulatory review for the markets you serve, and a board or leadership briefing in plain language.</p></div>
+        <div class="col"><h4>Good fit when</h4><p>You are under pressure to “do something with AI” and want a clear view first, or you have tried a tool or two and the results were mixed. You may need an independent second opinion on a vendor proposal, or you handle sensitive data and need to know where the lines are.</p></div>
+      </div>
+
+      <div class="panel" role="tabpanel" id="panel-systems" aria-labelledby="tab-systems" hidden>
+        <div class="intro">
+          <h3>Custom systems</h3>
+          <p class="muted">Bespoke AI tools, agents and integrations designed around your processes, data and controls, not an off-the-shelf product. Proven on one process before it goes any wider, from a single workflow to the whole company.</p>
+        </div>
+        <div class="col"><h4>What we build</h4><p>Assistants and agents for internal teams across support, operations, finance and sales. Document and data pipelines for extraction, classification, summarisation and search. Integrations with the tools you already run, such as your CRM, ERP, helpdesk, email and spreadsheets. Every build includes an evaluation harness and human-review steps from day one, and ships with a hand-over pack: runbook, monitoring plan and pinned model versions.</p></div>
+        <div class="col"><h4>How it runs</h4><p>Your data stays in your environment or a named, agreed location, on API and enterprise tiers with no-training terms. A measurable acceptance test is agreed before we start, and you own the deliverables on payment.</p></div>
+      </div>
+
+      <div class="panel" role="tabpanel" id="panel-verify" aria-labelledby="tab-verify" hidden>
+        <div class="intro">
+          <h3>Verify: keep every system honest after launch</h3>
+          <p class="muted">Evaluation, monitoring and governance so each system stays accurate, your data stays yours and where it belongs, and someone can always explain why it did what it did.</p>
+        </div>
+        <div class="col"><h4>What it covers</h4><p>Ongoing evaluation against a test set that grows with real cases, with drift, cost and failure monitoring and alerts you can act on. Model-version changes are tested before they reach production. You get an audit trail of what the system saw, what it did and who approved it, plus the policy and governance documents your clients and auditors will ask for.</p></div>
+        <div class="col"><h4>Formats</h4><p>A one-off launch review, a quarterly health check, or a monthly retainer with a response commitment.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="engagements" class="page" aria-labelledby="eng-h">
+    <div class="wrap">
+      <p class="eyebrow">Engagements</p>
+      <h2 id="eng-h">Pick the size that fits. Every one ends in something you can use.</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th scope="col">Engagement</th><th scope="col">Best for</th><th scope="col">Typical length</th><th scope="col">You receive</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Working session</strong></td><td>Founders and small teams with specific questions</td><td class="k">2–3 hours</td><td>Written answers, next steps, tool recommendations</td></tr>
+            <tr><td><strong>Guidance review</strong></td><td>Any company deciding where to start or where to stop</td><td class="k">2–3 weeks</td><td>Guidance report, ranked opportunity list, risk and regulatory notes</td></tr>
+            <tr><td><strong>Custom system build</strong></td><td>One process with a measurable outcome</td><td class="k">4–8 weeks</td><td>Working system, evaluation set, deployment notes, hand-over pack</td></tr>
+            <tr><td><strong>Verify retainer</strong></td><td>Anyone running AI in production</td><td class="k">Monthly or quarterly</td><td>Evaluation runs, monitoring, version testing, governance updates</td></tr>
+            <tr><td><strong>Advisory retainer</strong></td><td>Leadership teams who want a standing AI adviser</td><td class="k">Monthly</td><td>Scheduled time, vendor reviews, briefing notes on request</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="note">Fixed fee or time-and-materials, agreed in a short statement of work. Expenses only when pre-approved.</p>
+    </div>
+  </section>
+
+  <section id="process" class="page" aria-labelledby="process-h">
+    <div class="wrap">
+      <p class="eyebrow">How we work</p>
+      <h2 id="process-h">Short, written, measurable.</h2>
+      <ol class="steps">
+        <li><div><h3>Listen</h3><p>A conversation about your business, your data and what “better” would look like. No charge, no deck.</p></div></li>
+        <li><div><h3>Scope</h3><p>A one-page statement of work: objective, deliverables, acceptance test, data rules, fee. You sign only when it is exactly right.</p></div></li>
+        <li><div><h3>Guide or build</h3><p>Weekly written status. You see work in progress, not a reveal at the end.</p></div></li>
+        <li><div><h3>Prove</h3><p>Deliverables pass the acceptance test we agreed. Systems ship with an evaluation set and a human-review step.</p></div></li>
+        <li><div><h3>Hand over and verify</h3><p>You own the result. We stay on only if you want us to keep it honest.</p></div></li>
+      </ol>
+    </div>
+  </section>
+
+  <section id="about" class="page hero" aria-labelledby="about-h">
+    <div class="wrap">
+      <p class="eyebrow">About · AI guidance · Custom systems</p>
+      <h1 id="about-h">Truth in Mind.</h1>
+      <p class="lede"><strong>AI guidance and custom systems for companies of every size.</strong> Independent advice on where AI belongs in your business, and the systems to make it work.</p>
+      <div class="actions">
+        <a class="btn primary" href="#contact">Start a conversation</a>
+        <a class="btn" href="#services">See what we do</a>
+      </div>
+      <h2>Independent by design.</h2>
+      <p class="lede">Mentis Veritas is an independent consultancy led by Logan Kenney. We are not resellers, we do not take referral fees from AI vendors, and we never use your data to train anything for anyone else. The name is Latin for “truth in mind”: the standard we hold every recommendation and every system to.</p>
+      <div class="grid">
+        <div class="card"><h3>Independent</h3><p>No vendor commissions. Advice is the product.</p></div>
+        <div class="card"><h3>Measurable</h3><p>Every engagement has an acceptance test agreed in writing before work starts.</p></div>
+        <div class="card"><h3>Explainable</h3><p>Someone can always say why a system did what it did.</p></div>
+        <div class="card"><h3>Yours</h3><p>Your data stays where it belongs. You own the deliverables.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="faq" class="page" aria-labelledby="faq-h">
+    <div class="wrap">
+      <p class="eyebrow">FAQ</p>
+      <h2 id="faq-h">Questions we hear first.</h2>
+      <div class="faq-list">
+        <details><summary>Are we too small for this?</summary><p>No. The working session exists for exactly that. Many of the highest-return AI projects are small, specific and cheap to prove.</p></details>
+        <details><summary>Which AI vendors do you use?</summary><p>Whichever fits your data, budget and risk. We work across the major model providers and open models, and we put the choice and the reasons in writing.</p></details>
+        <details><summary>What happens to our data?</summary><p>It stays in your environment or a location we name in the statement of work. We use API and enterprise tiers with no-training terms, and we delete working copies at the end of the retention period and confirm in writing.</p></details>
+        <details><summary>Do you work with companies outside your country?</summary><p>Yes. We work remotely with clients wherever they are, and regulatory review covers the markets you actually serve.</p></details>
+        <details><summary>Who owns what we build?</summary><p>You do, on payment. We keep our pre-existing tools and methods and licence anything embedded in your deliverables to you permanently.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="page" aria-labelledby="contact-h">
+    <div class="wrap">
+      <div class="status">
+        <p class="eyebrow">Contact</p>
+        <h2 id="contact-h">Tell us what you are trying to do.</h2>
+        <p class="muted">Mentis Veritas is being established and works with clients of every size, wherever they are. Write to us with a sentence or two about your business and the problem; we reply within two business days.</p>
+        <div class="contact">
+          <code id="email">hello@mentisveritas.com</code>
+          <button class="btn primary" type="button" id="copy-btn">Copy address</button>
+          <a class="btn" href="mailto:hello@mentisveritas.com?subject=Mentis%20Veritas%20enquiry">Open in mail</a>
+          <span class="note" id="copy-note" aria-live="polite"></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 Mentis Veritas LLC</span>
+    <nav aria-label="Footer">
+      <a href="#services">Services</a>
+      <a href="#engagements">Engagements</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+      <a href="mailto:hello@mentisveritas.com">hello@mentisveritas.com</a>
+    </nav>
+  </div>
+</footer>
+
+<script>
+  (function () {
+    // Tabs
+    var tabs = Array.prototype.slice.call(document.querySelectorAll('[role="tab"]'));
+    function select(tab) {
+      tabs.forEach(function (t) {
+        var on = t === tab;
+        t.setAttribute('aria-selected', on ? 'true' : 'false');
+        t.tabIndex = on ? 0 : -1;
+        document.getElementById(t.getAttribute('aria-controls')).hidden = !on;
+      });
+    }
+    tabs.forEach(function (t, i) {
+      t.addEventListener('click', function () { select(t); });
+      t.addEventListener('keydown', function (e) {
+        var n = e.key === 'ArrowRight' ? i + 1 : e.key === 'ArrowLeft' ? i - 1 : null;
+        if (n === null) return;
+        var next = tabs[(n + tabs.length) % tabs.length];
+        select(next); next.focus(); e.preventDefault();
+      });
+    });
+
+    // Pages: show the one named in the hash; the logo is the home page
+    var pages = Array.prototype.slice.call(document.querySelectorAll('.page'));
+    var links = Array.prototype.slice.call(document.querySelectorAll('nav.primary a'));
+    function show() {
+      var id = (location.hash || '#home').slice(1);
+      if (!document.getElementById(id) || !document.getElementById(id).classList.contains('page')) id = 'home';
+      pages.forEach(function (p) { p.classList.toggle('active', p.id === id); });
+      links.forEach(function (a) { a.setAttribute('aria-current', a.getAttribute('href') === '#' + id ? 'true' : 'false'); });
+      document.title = id === 'home' ? 'Mentis Veritas' : 'Mentis Veritas · ' + (document.querySelector('#' + id + ' .eyebrow') || {}).textContent.split('·')[0].trim();
+      window.scrollTo(0, 0);
+      requestAnimationFrame(function () { window.scrollTo(0, 0); });
+    }
+    window.addEventListener('hashchange', show);
+    show();
+
+    // Copy email
+    var btn = document.getElementById('copy-btn');
+    var note = document.getElementById('copy-note');
+    var email = document.getElementById('email');
+    btn.addEventListener('click', function () {
+      var text = email.textContent.trim();
+      function fallback() {
+        try {
+          var r = document.createRange(); r.selectNodeContents(email);
+          var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+          note.textContent = 'Selected. Press Ctrl+C or Cmd+C to copy.';
+        } catch (e) { note.textContent = 'Copy the address above.'; }
+      }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(function () {
+          note.textContent = 'Copied.';
+          setTimeout(function () { note.textContent = ''; }, 2500);
+        }, fallback);
+      } else { fallback(); }
+    });
+  })();
+</script>
+</body>
+</html>
