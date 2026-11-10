@@ -65,7 +65,8 @@
   /* Logo stage: the whole first screen is the animated mark */
   .logo-stage { min-height: calc(100svh - 82px - env(safe-area-inset-top, 0px)); place-items: center; position: relative; margin-top: -3.5rem; }
   /* The mark's resting state is fully drawn and visible; the intro animations only hide it during their own delay (fill-mode both).
-     So a browser that skips CSS animation (Safari inside SVG masks, in-app browsers, link previews) still shows the whole logo. */
+     So a browser that skips CSS animation (in-app browsers, link previews, a paused tab) still shows the whole logo.
+     Kept deliberately plain for Safari: literal lengths and colours, no SVG mask, no variables inside keyframes. */
   .logo { width: min(46vw, 260px); height: auto; display: block; position: relative; z-index: 1; filter: drop-shadow(0 0 18px rgba(127,166,224,.35)); will-change: transform; }
   .logo-stage::before { content: ""; position: absolute; left: 50%; top: 50%; width: min(90vw, 620px); aspect-ratio: 1; transform: translate(-50%, -50%); border-radius: 50%; pointer-events: none; will-change: transform, opacity;
     background: radial-gradient(circle, rgba(127,166,224,.38) 0%, rgba(127,166,224,.16) 28%, rgba(43,76,126,.08) 48%, transparent 68%); animation: glowin 2s ease 1s both; }
@@ -75,11 +76,11 @@
   @keyframes fadein { from { opacity: 0; } to { opacity: 1; } }
   @media (prefers-reduced-motion: no-preference) {
     /* Orbit monogram: the white M draws, the blue V (truth) draws into it, the orbit draws, then the blue node travels it */
-    .mv-draw { stroke-dasharray: var(--len) var(--len); animation: draw 1.4s cubic-bezier(.4,0,.2,1) var(--d, 0s) both; }
-    .mv-m { --len: 350; }
-    .mv-v { --len: 165; --d: 1.1s; }
-    .mv-orbit { --len: 412; --d: 1.4s; }
-    .mv-front { --len: 206; --d: 1.6s; }
+    .mv-draw { animation: 1.4s cubic-bezier(.4,0,.2,1) both; }
+    .mv-m { stroke-dasharray: 350 350; animation-name: draw-m; }
+    .mv-v { stroke-dasharray: 165 165; animation-name: draw-v; animation-delay: 1.1s; }
+    .mv-orbit { stroke-dasharray: 412 412; animation-name: draw-orbit; animation-delay: 1.4s; }
+    .mv-front { stroke-dasharray: 206 206; animation-name: draw-front; animation-delay: 1.6s; }
     .mv-halo { animation: fadein .7s ease 1.9s both; }
     .mv-breathe { animation: vglow 5s ease-in-out infinite; }
     .mv-node { animation: fadein .7s ease 2.3s both; }
@@ -88,7 +89,10 @@
     .logo-stage::before { animation: glowin 2s ease 1s both, pulse 7s ease-in-out 3s infinite; }
     @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
     @keyframes pulse { 0%, 100% { opacity: 1; transform: translate(-50%, -50%) scale(1); } 50% { opacity: .8; transform: translate(-50%, -50%) scale(1.06); } }
-    @keyframes draw { from { stroke-dashoffset: var(--len); } to { stroke-dashoffset: 0; } }
+    @keyframes draw-m { from { stroke-dashoffset: 350; } to { stroke-dashoffset: 0; } }
+    @keyframes draw-v { from { stroke-dashoffset: 165; } to { stroke-dashoffset: 0; } }
+    @keyframes draw-orbit { from { stroke-dashoffset: 412; } to { stroke-dashoffset: 0; } }
+    @keyframes draw-front { from { stroke-dashoffset: 206; } to { stroke-dashoffset: 0; } }
     @keyframes vglow { 0%, 100% { opacity: .55; } 50% { opacity: 1; } }
     @keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(4px); } }
   }
@@ -221,27 +225,23 @@
 
   <section id="home" class="page logo-stage" aria-label="Mentis Veritas">
     <!-- Logo: Orbit monogram (option 05, chosen by Logan 2026-11-10). An M for Mentis whose middle is a blue V for Veritas,
-         with one tilted orbit and a blue node. The front of the orbit cuts the M for depth. Header mark and favicon use the M alone. -->
+         with one tilted orbit and a blue node. Where the front of the orbit crosses the M's right leg, a thin black stroke clipped to the leg makes the gap. Header mark and favicon use the M alone. -->
     <svg class="logo" viewBox="0 0 200 200" role="img" aria-labelledby="logo-title">
       <title id="logo-title">Mentis Veritas</title>
       <defs>
         <clipPath id="mv-v"><rect x="60.5" y="0" width="79" height="200"/></clipPath>
         <filter id="mv-glow" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="6"/></filter>
-        <mask id="mv-cut" maskUnits="userSpaceOnUse" x="0" y="0" width="200" height="200">
-          <rect width="200" height="200" fill="#fff"/>
-          <path class="mv-draw mv-front" d="M8 100 A92 30 0 0 0 192 100" transform="rotate(-18 100 100)" fill="none" stroke="#000" stroke-width="4.6"/>
-        </mask>
+        <clipPath id="mv-leg"><rect x="127.65" y="104" width="6.3" height="28.2"/></clipPath>
         <clipPath id="mv-front-half"><rect x="-40" y="100" width="280" height="140" transform="rotate(-18 100 100)"/></clipPath>
       </defs>
       <g transform="rotate(-18 100 100)"><ellipse class="mv-draw mv-orbit" cx="100" cy="100" rx="92" ry="30" fill="none" stroke="#ffffff" stroke-opacity=".32" stroke-width="1.5"/></g>
       <g class="mv-node"><g transform="rotate(-18 100 100)"><circle r="5" fill="#7fa6e0"><animateMotion dur="9s" repeatCount="indefinite" path="M8 100 A92 30 0 1 1 192 100 A92 30 0 1 1 8 100"/></circle></g></g>
-      <g mask="url(#mv-cut)">
-        <g transform="translate(100 100) scale(.7) translate(-100 -100)">
-          <g class="mv-halo"><g class="mv-breathe"><path d="M62 63.3 L100 122 L138 63.3" fill="none" stroke="#7fa6e0" stroke-width="10" filter="url(#mv-glow)"/></g></g>
-          <path class="mv-draw mv-m" d="M56 146 V54 L100 122 L144 54 V146" fill="none" stroke="#ffffff" stroke-width="9" stroke-miterlimit="6"/>
-          <g clip-path="url(#mv-v)"><path class="mv-draw mv-v" d="M56 54 L100 122 L144 54" fill="none" stroke="#7fa6e0" stroke-width="9.6" stroke-miterlimit="6"/></g>
-        </g>
+      <g transform="translate(100 100) scale(.7) translate(-100 -100)">
+        <g class="mv-halo"><g class="mv-breathe"><path d="M62 63.3 L100 122 L138 63.3" fill="none" stroke="#7fa6e0" stroke-width="10" filter="url(#mv-glow)"/></g></g>
+        <path class="mv-draw mv-m" d="M56 146 V54 L100 122 L144 54 V146" fill="none" stroke="#ffffff" stroke-width="9" stroke-miterlimit="6"/>
+        <g clip-path="url(#mv-v)"><path class="mv-draw mv-v" d="M56 54 L100 122 L144 54" fill="none" stroke="#7fa6e0" stroke-width="9.6" stroke-miterlimit="6"/></g>
       </g>
+      <g clip-path="url(#mv-leg)"><path class="mv-draw mv-front" d="M8 100 A92 30 0 0 0 192 100" transform="rotate(-18 100 100)" fill="none" stroke="#000000" stroke-width="4.2"/></g>
       <g transform="rotate(-18 100 100)"><path class="mv-draw mv-front" d="M8 100 A92 30 0 0 0 192 100" fill="none" stroke="#ffffff" stroke-opacity=".7" stroke-width="1.5"/></g>
       <g class="mv-node" clip-path="url(#mv-front-half)"><g transform="rotate(-18 100 100)"><circle r="5" fill="#7fa6e0"><animateMotion dur="9s" repeatCount="indefinite" path="M8 100 A92 30 0 1 1 192 100 A92 30 0 1 1 8 100"/></circle></g></g>
     </svg>
