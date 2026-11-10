@@ -5,6 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="description" content="Mentis Veritas. High IQ, powered by AI. We think with you about where AI belongs, and we build bespoke LLM systems to make it work.">
 <title>Mentis Veritas</title>
+<link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,500;9..144,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <style>
   /* Black, open, unboxed. One accent (blue) for the mark, labels and highlights; no cards or frames, just type, hairlines and space. */
@@ -66,20 +69,22 @@
   .scroll-cue:hover { color: var(--fg); background: var(--bg-2); }
   @keyframes fadein { to { opacity: 1; } }
   @media (prefers-reduced-motion: no-preference) {
-    .ring { stroke-dasharray: 600; stroke-dashoffset: 600; animation: draw 1.6s cubic-bezier(.4,0,.2,1) forwards; transform-origin: 100px 100px; transform: rotate(-90deg); }
-    .ring-inner { animation-delay: .25s; }
-    .ticks { opacity: 0; animation: fadein .6s ease 1.2s forwards; }
-    .hub { transform-origin: 100px 100px; transform: scale(0); animation: pop .5s cubic-bezier(.2,.8,.2,1.4) 1.1s forwards; }
-    .needle-big { transform-origin: 100px 100px; transform: rotate(-120deg); opacity: 0; animation: swing 1.8s cubic-bezier(.2,.8,.2,1) 1.3s forwards, breathe 6s ease-in-out 3.2s infinite; }
+    /* Orbit monogram: the white M draws, the blue V (truth) draws into it, the orbit draws, then the blue node travels it */
+    .mv-draw { stroke-dasharray: var(--len) var(--len); stroke-dashoffset: var(--len); animation: draw 1.4s cubic-bezier(.4,0,.2,1) var(--d, 0s) forwards; }
+    .mv-m { --len: 350; }
+    .mv-v { --len: 165; --d: 1.1s; }
+    .mv-orbit { --len: 412; --d: 1.4s; }
+    .mv-front { --len: 206; --d: 1.6s; }
+    .mv-halo { opacity: 0; animation: fadein .7s ease 1.9s forwards; }
+    .mv-breathe { animation: vglow 5s ease-in-out infinite; }
+    .mv-node { opacity: 0; animation: fadein .7s ease 2.3s forwards; }
     .scroll-cue svg { animation: bob 2s ease-in-out infinite; }
     .logo { animation: float 7s ease-in-out 3s infinite; }
     .logo-stage::before { animation: glowin 2s ease 1s forwards, pulse 7s ease-in-out 3s infinite; }
     @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
     @keyframes pulse { 0%, 100% { opacity: 1; transform: translate(-50%, -50%) scale(1); } 50% { opacity: .8; transform: translate(-50%, -50%) scale(1.06); } }
     @keyframes draw { to { stroke-dashoffset: 0; } }
-    @keyframes pop { to { transform: scale(1); } }
-    @keyframes swing { 0% { opacity: 0; transform: rotate(-120deg); } 15% { opacity: 1; } 70% { transform: rotate(10deg); } 100% { opacity: 1; transform: rotate(0deg); } }
-    @keyframes breathe { 0%, 100% { transform: rotate(0deg); } 50% { transform: rotate(-4deg); } }
+    @keyframes vglow { 0%, 100% { opacity: .55; } 50% { opacity: 1; } }
     @keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(4px); } }
   }
   @media (prefers-reduced-motion: reduce) { .scroll-cue { opacity: 1; } }
@@ -179,11 +184,6 @@
   footer nav { display: flex; gap: 1.1rem; flex-wrap: wrap; }
   footer a { text-decoration: none; }
   footer a:hover { color: var(--fg); }
-
-  @media (prefers-reduced-motion: no-preference) {
-    .needle { transform-origin: 20px 20px; animation: settle 2.4s cubic-bezier(.2,.8,.2,1) 1 both; }
-    @keyframes settle { from { transform: rotate(-70deg); } 60% { transform: rotate(8deg); } to { transform: rotate(0deg); } }
-  }
 </style>
 </head>
 <body>
@@ -191,13 +191,10 @@
 <header class="site-header">
   <div class="wrap">
     <a class="brand" href="#home" aria-label="Mentis Veritas home">
-      <svg class="mark" viewBox="0 0 40 40" aria-hidden="true">
-        <circle cx="20" cy="20" r="18" fill="none" stroke="var(--fg)" stroke-width="1.5"/>
-        <circle cx="20" cy="20" r="2" fill="var(--fg)"/>
-        <g class="needle">
-          <path d="M20 4 L23.2 20 L20 23 L16.8 20 Z" fill="var(--accent)"/>
-          <path d="M20 36 L16.8 20 L20 17 L23.2 20 Z" fill="#3a3a40"/>
-        </g>
+      <svg class="mark" viewBox="0 0 200 200" aria-hidden="true">
+        <defs><clipPath id="mv-v-small"><rect x="56" y="0" width="88" height="200"/></clipPath></defs>
+        <path d="M46 158 V46 L100 128 L154 46 V158" fill="none" stroke="var(--fg)" stroke-width="20" stroke-miterlimit="6"/>
+        <path clip-path="url(#mv-v-small)" d="M46 158 V46 L100 128 L154 46 V158" fill="none" stroke="var(--accent)" stroke-width="21" stroke-miterlimit="6"/>
       </svg>
       <span class="brand-name">Mentis Veritas</span>
     </a>
@@ -218,20 +215,30 @@
 <main>
 
   <section id="home" class="page logo-stage" aria-label="Mentis Veritas">
-    <!-- Placeholder mark until the final logo is ready. Swap the SVG below for the real logo; keep the class names so the animation still applies. -->
+    <!-- Logo: Orbit monogram (option 05, chosen by Logan 2026-11-10). An M for Mentis whose middle is a blue V for Veritas,
+         with one tilted orbit and a blue node. The front of the orbit cuts the M for depth. Header mark and favicon use the M alone. -->
     <svg class="logo" viewBox="0 0 200 200" role="img" aria-labelledby="logo-title">
       <title id="logo-title">Mentis Veritas</title>
-      <circle class="ring ring-outer" cx="100" cy="100" r="86" fill="none" stroke="var(--fg)" stroke-width="2"/>
-      <circle class="ring ring-inner" cx="100" cy="100" r="62" fill="none" stroke="var(--rule)" stroke-width="1.5"/>
-      <g class="ticks" stroke="var(--fg-2)" stroke-width="1.5" stroke-linecap="round">
-        <line x1="100" y1="10" x2="100" y2="20"/><line x1="190" y1="100" x2="180" y2="100"/>
-        <line x1="100" y1="190" x2="100" y2="180"/><line x1="10" y1="100" x2="20" y2="100"/>
+      <defs>
+        <clipPath id="mv-v"><rect x="60.5" y="0" width="79" height="200"/></clipPath>
+        <filter id="mv-glow" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="6"/></filter>
+        <mask id="mv-cut" maskUnits="userSpaceOnUse" x="0" y="0" width="200" height="200">
+          <rect width="200" height="200" fill="#fff"/>
+          <path class="mv-draw mv-front" d="M8 100 A92 30 0 0 0 192 100" transform="rotate(-18 100 100)" fill="none" stroke="#000" stroke-width="4.6"/>
+        </mask>
+        <clipPath id="mv-front-half"><rect x="-40" y="100" width="280" height="140" transform="rotate(-18 100 100)"/></clipPath>
+      </defs>
+      <g transform="rotate(-18 100 100)"><ellipse class="mv-draw mv-orbit" cx="100" cy="100" rx="92" ry="30" fill="none" stroke="var(--fg)" stroke-opacity=".32" stroke-width="1.5"/></g>
+      <g class="mv-node"><g transform="rotate(-18 100 100)"><circle r="5" fill="var(--accent)"><animateMotion dur="9s" repeatCount="indefinite" path="M8 100 A92 30 0 1 1 192 100 A92 30 0 1 1 8 100"/></circle></g></g>
+      <g mask="url(#mv-cut)">
+        <g transform="translate(100 100) scale(.7) translate(-100 -100)">
+          <g class="mv-halo"><g class="mv-breathe"><path d="M62 63.3 L100 122 L138 63.3" fill="none" stroke="var(--accent)" stroke-width="10" filter="url(#mv-glow)"/></g></g>
+          <path class="mv-draw mv-m" d="M56 146 V54 L100 122 L144 54 V146" fill="none" stroke="var(--fg)" stroke-width="9" stroke-miterlimit="6"/>
+          <g clip-path="url(#mv-v)"><path class="mv-draw mv-v" d="M56 54 L100 122 L144 54" fill="none" stroke="var(--accent)" stroke-width="9.6" stroke-miterlimit="6"/></g>
+        </g>
       </g>
-      <g class="needle-big">
-        <path d="M100 30 L112 100 L100 112 L88 100 Z" fill="var(--accent)"/>
-        <path d="M100 170 L88 100 L100 88 L112 100 Z" fill="#3a3a40"/>
-      </g>
-      <circle class="hub" cx="100" cy="100" r="6" fill="var(--fg)"/>
+      <g transform="rotate(-18 100 100)"><path class="mv-draw mv-front" d="M8 100 A92 30 0 0 0 192 100" fill="none" stroke="var(--fg)" stroke-opacity=".7" stroke-width="1.5"/></g>
+      <g class="mv-node" clip-path="url(#mv-front-half)"><g transform="rotate(-18 100 100)"><circle r="5" fill="var(--accent)"><animateMotion dur="9s" repeatCount="indefinite" path="M8 100 A92 30 0 1 1 192 100 A92 30 0 1 1 8 100"/></circle></g></g>
     </svg>
     <a class="scroll-cue" href="#services" aria-label="Enter the site">
       <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -413,6 +420,10 @@
     }
     window.addEventListener('hashchange', show);
     show();
+
+    // Reduced motion: hold the orbit node still (CSS already skips the draw-in)
+    var logo = document.querySelector('.logo');
+    if (logo && logo.pauseAnimations && window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) logo.pauseAnimations();
 
     // Copy email
     var btn = document.getElementById('copy-btn');

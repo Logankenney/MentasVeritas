@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <title>Mentis Veritas</title>
+  <defs><clipPath id="v"><rect x="56" y="0" width="88" height="200"/></clipPath></defs>
+  <rect width="200" height="200" rx="44" fill="#000"/>
+  <g transform="translate(100 104) scale(.74) translate(-100 -100)">
+    <path d="M46 158 V46 L100 128 L154 46 V158" fill="none" stroke="#fff" stroke-width="20" stroke-miterlimit="6"/>
+    <path clip-path="url(#v)" d="M46 158 V46 L100 128 L154 46 V158" fill="none" stroke="#7fa6e0" stroke-width="21" stroke-miterlimit="6"/>
+  </g>
+</svg>
