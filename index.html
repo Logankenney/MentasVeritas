@@ -398,7 +398,8 @@
       if (!document.getElementById(id) || !document.getElementById(id).classList.contains('page')) id = 'home';
       pages.forEach(function (p) { p.classList.toggle('active', p.id === id); });
       links.forEach(function (a) { a.setAttribute('aria-current', a.getAttribute('href') === '#' + id ? 'true' : 'false'); });
-      document.title = id === 'home' ? 'Mentis Veritas' : 'Mentis Veritas · ' + (document.querySelector('#' + id + ' .eyebrow') || {}).textContent.split('·')[0].trim();
+      var navLink = document.querySelector('nav.primary a[href="#' + id + '"]');
+      document.title = id === 'home' || !navLink ? 'Mentis Veritas' : 'Mentis Veritas · ' + navLink.textContent.trim();
       window.scrollTo(0, 0);
       requestAnimationFrame(function () { window.scrollTo(0, 0); });
     }
