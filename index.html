@@ -39,13 +39,12 @@
   nav.primary { display: flex; flex: 1; justify-content: space-evenly; align-items: center; margin: 0 1.5rem; }
   nav.primary a { font-size: 12px; font-weight: 400; letter-spacing: -.01em; text-decoration: none; color: var(--fg); opacity: .8; padding: 0 .25rem; line-height: 48px; transition: opacity .2s ease; }
   nav.primary a:hover, nav.primary a[aria-current="true"] { opacity: 1; }
-  .hdr-icon { display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; color: var(--fg); opacity: .8; }
-  .hdr-icon:hover { opacity: 1; }
+  .hdr-spacer { display: inline-block; width: 28px; height: 28px; }
   /* Phones: the header stays static. The mark and mail icon share the top row; the six links sit in a second thin row, always visible, never a menu. */
   @media (max-width: 760px) {
     .site-header .wrap { height: auto; flex-wrap: wrap; padding-top: 2px; }
-    .brand, .hdr-icon { height: 40px; }
-    .hdr-icon { order: 2; }
+    .brand, .hdr-spacer { height: 40px; }
+    .hdr-spacer { order: 2; }
     nav.primary { order: 3; flex: 1 0 100%; margin: 0; justify-content: space-between; gap: .25rem; height: 32px; }
     nav.primary a { font-size: 11px; line-height: 32px; padding: 0; letter-spacing: 0; white-space: nowrap; }
     html { scroll-padding-top: 6rem; }
@@ -209,15 +208,12 @@
     </a>
     <nav class="primary" id="primary-nav" aria-label="Sections">
       <a href="#services">Services</a>
-      <a href="#engagements">Engagements</a>
       <a href="#process">How we work</a>
       <a href="#about">About</a>
       <a href="#faq">FAQ</a>
       <a href="#contact">Contact</a>
     </nav>
-    <a class="hdr-icon" href="#contact" aria-label="Contact">
-      <svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 6.5 12 13l8.5-6.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
-    </a>
+    <span class="hdr-spacer" aria-hidden="true"></span>
   </div>
 </header>
 
@@ -270,25 +266,6 @@
       <div class="panel" role="tabpanel" id="panel-verify" aria-labelledby="tab-verify" hidden>
         <div class="col"><h4>What we do</h4><p>Evaluate against real cases as they grow. Watch drift, cost and failure. Test every change before production. Keep the trail that lets someone say why.</p></div>
       </div>
-    </div>
-  </section>
-
-  <section id="engagements" class="page" aria-labelledby="eng-h">
-    <div class="wrap">
-      <h2 id="eng-h">We size the work to the problem.</h2>
-      <div class="table-wrap">
-        <table>
-          <thead><tr><th scope="col">Engagement</th><th scope="col">We do this when</th><th scope="col">Typical length</th><th scope="col">You leave with</th></tr></thead>
-          <tbody>
-            <tr><td><strong>Working session</strong></td><td>Specific questions, fast</td><td class="k">2–3 hours</td><td>Written answers and next steps</td></tr>
-            <tr><td><strong>Guidance review</strong></td><td>Deciding where to start, or where to stop</td><td class="k">2–3 weeks</td><td>Guidance report and ranked path</td></tr>
-            <tr><td><strong>Custom system build</strong></td><td>One process, one measurable outcome</td><td class="k">4–8 weeks</td><td>Working system and hand-over pack</td></tr>
-            <tr><td><strong>Verify retainer</strong></td><td>AI already in production</td><td class="k">Monthly or quarterly</td><td>Evaluation, monitoring, governance</td></tr>
-            <tr><td><strong>Advisory retainer</strong></td><td>A standing AI adviser</td><td class="k">Monthly</td><td>Scheduled time and briefings on request</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <p class="note">We agree the fee on one page before we start. Fixed or by the hour, your call.</p>
     </div>
   </section>
 
@@ -360,7 +337,6 @@
     <span>© 2026 Mentis Veritas LLC</span>
     <nav aria-label="Footer">
       <a href="#services">Services</a>
-      <a href="#engagements">Engagements</a>
       <a href="#about">About</a>
       <a href="#contact">Contact</a>
       <a href="mailto:hello@mentisveritas.com">hello@mentisveritas.com</a>
