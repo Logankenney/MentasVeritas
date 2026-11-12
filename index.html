@@ -142,10 +142,10 @@
   .tabs { display: flex; flex-wrap: wrap; justify-content: center; gap: .6rem; align-self: center; max-width: 100%; }
   .tabs button { font-size: 1rem; color: var(--fg); opacity: .6; padding: .6rem 1.1rem; white-space: nowrap; transition: opacity .2s ease; }
   .tabs button:hover, .tabs button:focus-visible, .tabs button[aria-selected="true"] { opacity: 1; }
-  .panel { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
+  .panel { display: grid; grid-template-columns: 1fr; gap: 1.25rem; }
   .panel[hidden] { display: none; }
   .panel > .intro { grid-column: 1 / -1; display: flex; flex-direction: column; gap: .6rem; padding-bottom: .25rem; }
-  .panel .col { padding: .5rem .25rem; }
+  .panel .col { padding: .5rem .25rem; max-width: 40rem; margin: 0 auto; text-align: center; }
   .panel .col h4 { font-family: var(--body); font-size: .8rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--accent); margin: 0 0 .75rem; }
   .panel .col p { color: var(--fg-2); font-size: 1.05rem; line-height: 1.7; }
   @media (max-width: 640px) { .panel { grid-template-columns: 1fr; } }
@@ -262,17 +262,14 @@
 
       <div class="panel" role="tabpanel" id="panel-guidance" aria-labelledby="tab-guidance">
         <div class="col"><h4>What we do</h4><p>Map where AI pays off, rank the moves, and identify the risks. We tailor and identify the best options for your business.</p></div>
-        <div class="col"><h4>What we won’t</h4><p>Sell you a platform. Take a referral fee. Recommend anything we would not run ourselves.</p></div>
       </div>
 
       <div class="panel" role="tabpanel" id="panel-systems" aria-labelledby="tab-systems" hidden>
         <div class="col"><h4>What we do</h4><p>Design assistants that think alongside your teams, pipelines that make sense of your documents, and connections to the tools you already run. Prove it on one problem, then widen.</p></div>
-        <div class="col"><h4>What we won’t</h4><p>Move your data where it does not belong. Ship without a test we agreed. Keep what you paid for.</p></div>
       </div>
 
       <div class="panel" role="tabpanel" id="panel-verify" aria-labelledby="tab-verify" hidden>
         <div class="col"><h4>What we do</h4><p>Evaluate against real cases as they grow. Watch drift, cost and failure. Test every change before production. Keep the trail that lets someone say why.</p></div>
-        <div class="col"><h4>What we won’t</h4><p>Let a model update reach production untested. Leave you to explain a decision nobody can trace. Disappear after launch.</p></div>
       </div>
     </div>
   </section>
