@@ -40,13 +40,17 @@
   nav.primary a { font-size: 12px; font-weight: 400; letter-spacing: -.01em; text-decoration: none; color: var(--fg); opacity: .8; padding: 0 .25rem; line-height: 48px; transition: opacity .2s ease; }
   nav.primary a:hover, nav.primary a[aria-current="true"] { opacity: 1; }
   .hdr-spacer { display: inline-block; width: 28px; height: 28px; }
-  /* Products: one header item that opens a small list; tap or click to open, Escape, outside tap or focus leaving closes it. Same translucent black as the bar, no border. */
+  /* Products: the link opens the Products page; the small chevron (or a hover on pointer devices) opens a short list of the product sites. Escape, an outside tap or focus leaving closes it. Plain black list, no border. */
   .menu { position: relative; display: flex; align-items: center; }
-  .menu-btn { font: inherit; font-size: 12px; font-weight: 400; letter-spacing: -.01em; color: var(--fg); opacity: .8; background: none; border: 0; padding: 0 .25rem; line-height: 48px; cursor: pointer; transition: opacity .2s ease; -webkit-tap-highlight-color: transparent; }
+  nav.primary .menu > a { padding-right: .1rem; }
+  .menu-btn { display: inline-flex; align-items: center; color: var(--fg); opacity: .6; background: none; border: 0; padding: 0 .35rem 0 .15rem; height: 48px; cursor: pointer; transition: opacity .2s ease, transform .2s ease; -webkit-tap-highlight-color: transparent; }
   .menu-btn:hover, .menu.open .menu-btn { opacity: 1; }
+  .menu.open .menu-btn svg { transform: rotate(180deg); }
+  .menu-btn svg { transition: transform .2s ease; }
   .menu-btn:focus-visible { outline: 1px solid var(--accent); outline-offset: -4px; border-radius: 6px; }
   .menu-list { position: absolute; top: 100%; left: 50%; transform: translate(-50%, -4px); min-width: 11rem; padding: .4rem 0; display: flex; flex-direction: column; background: #000; border-radius: 10px; opacity: 0; visibility: hidden; pointer-events: none; transition: opacity .18s ease, transform .18s ease, visibility 0s linear .18s; }
   .menu.open .menu-list { opacity: 1; visibility: visible; pointer-events: auto; transform: translate(-50%, 0); transition-delay: 0s; }
+  @media (hover: hover) and (min-width: 761px) { .menu:hover .menu-list { opacity: 1; visibility: visible; pointer-events: auto; transform: translate(-50%, 0); transition-delay: 0s; } }
   nav.primary .menu-list a { line-height: 2.25rem; padding: 0 1.25rem; text-align: center; white-space: nowrap; }
   /* Phones: the header stays static. The mark and spacer share the top row; the six items sit in a second thin row, always visible, never a menu. Products still opens its own small list. */
   @media (max-width: 760px) {
@@ -55,7 +59,7 @@
     .hdr-spacer { order: 2; }
     nav.primary { order: 3; flex: 1 0 100%; margin: 0; justify-content: space-between; gap: .25rem; height: 32px; }
     nav.primary a { font-size: 11px; line-height: 32px; padding: 0; letter-spacing: 0; white-space: nowrap; }
-    .menu-btn { font-size: 11px; line-height: 32px; padding: 0; letter-spacing: 0; }
+    .menu-btn { height: 32px; padding: 0 0 0 .25rem; }
     .menu-list { left: auto; right: 0; transform: translate(0, -4px); }
     .menu.open .menu-list { transform: translate(0, 0); }
     nav.primary .menu-list a { line-height: 2.5rem; font-size: 12px; }
@@ -182,6 +186,12 @@
   .card { padding: .75rem .25rem; display: flex; flex-direction: column; gap: .4rem; }
   .card h3 { color: var(--accent); font-family: var(--body); font-weight: 600; font-size: 1.05rem; }
   .card p { color: var(--fg-2); font-size: 1.05rem; }
+  /* Products page: one block per product, name, one line, a bare button to its site; space, no boxes */
+  .products { width: 100%; display: grid; grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); gap: 2.5rem 3rem; max-width: 44rem; margin: .5rem auto 0; }
+  .product { display: flex; flex-direction: column; align-items: center; gap: .6rem; text-align: center; }
+  .product h3 { font-family: var(--display); font-weight: 500; font-size: 1.6rem; }
+  .product p { color: var(--fg-2); font-size: 1.1rem; max-width: 24ch; }
+  .product .btn { margin-top: .4rem; }
 
   /* FAQ */
   .faq-list { display: grid; gap: 0; max-width: 44rem; margin: 0 auto; }
@@ -225,7 +235,7 @@
       <a href="#faq">FAQ</a>
       <a href="#contact">Contact</a>
       <div class="menu" id="products-menu">
-        <button class="menu-btn" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="products-list">Products</button>
+        <a href="#products">Products</a><button class="menu-btn" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="products-list" aria-label="Show products"><svg viewBox="0 0 10 6" width="8" height="5" aria-hidden="true"><path d="M1 1l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
         <div class="menu-list" id="products-list" aria-label="Products">
           <a href="https://logankenney.github.io/Noodle/" rel="noopener">Noodle Mind Ai</a>
           <a href="https://logankenney.github.io/smart-docs-ai/" rel="noopener">Smart Docs Ai</a>
@@ -298,6 +308,24 @@
         <li><div><h3>Deploy</h3><p>We put it to work inside the tools you already use.</p></div></li>
         <li><div><h3>Continuous improvement</h3><p>We watch how it performs and keep making it better.</p></div></li>
       </ol>
+    </div>
+  </section>
+
+  <section id="products" class="page" aria-labelledby="products-h">
+    <div class="wrap">
+      <h2 id="products-h">What we build.</h2>
+      <div class="products">
+        <div class="product">
+          <h3>Noodle Mind Ai</h3>
+          <p>An Ai that takes your idea and makes it better.</p>
+          <a class="btn primary" href="https://logankenney.github.io/Noodle/" rel="noopener">Visit Noodle Mind Ai</a>
+        </div>
+        <div class="product">
+          <h3>Smart Docs Ai</h3>
+          <p>Ai document control. Every revision, every approval, on record.</p>
+          <a class="btn primary" href="https://logankenney.github.io/smart-docs-ai/" rel="noopener">Visit Smart Docs Ai</a>
+        </div>
+      </div>
     </div>
   </section>
 
