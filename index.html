@@ -86,8 +86,6 @@
   .logo-stage::before { content: ""; position: absolute; left: 50%; top: 50%; width: min(90vw, 620px); aspect-ratio: 1; transform: translate(-50%, -50%); border-radius: 50%; pointer-events: none; will-change: transform, opacity;
     background: radial-gradient(circle, rgba(127,166,224,.38) 0%, rgba(127,166,224,.16) 28%, rgba(43,76,126,.08) 48%, transparent 68%); animation: glowin 2s ease 1s both; }
   @keyframes glowin { from { opacity: 0; } to { opacity: 1; } }
-  .scroll-cue { position: absolute; bottom: 1.5rem; left: 50%; transform: translateX(-50%); color: var(--fg-2); padding: .5rem; border-radius: 999px; animation: fadein .8s ease 2.6s both; }
-  .scroll-cue:hover { color: var(--fg); background: var(--bg-2); }
   @keyframes fadein { from { opacity: 0; } to { opacity: 1; } }
   @media (prefers-reduced-motion: no-preference) {
     /* Orbit monogram: the white M draws, the blue V (truth) draws into it, the orbit draws, then the blue node travels it */
@@ -99,7 +97,6 @@
     .mv-halo { animation: fadein .7s ease 1.9s both; }
     .mv-breathe { animation: vglow 5s ease-in-out infinite; }
     .mv-node { animation: fadein .7s ease 2.3s both; }
-    .scroll-cue svg { animation: bob 2s ease-in-out infinite; }
     .logo { animation: float 7s ease-in-out 3s infinite; }
     .logo-stage::before { animation: glowin 2s ease 1s both, pulse 7s ease-in-out 3s infinite; }
     @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
@@ -111,7 +108,7 @@
     @keyframes vglow { 0%, 100% { opacity: .55; } 50% { opacity: 1; } }
     @keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(4px); } }
   }
-  @media (prefers-reduced-motion: reduce) { .scroll-cue, .logo-stage::before { animation: none; } }
+  @media (prefers-reduced-motion: reduce) { .logo-stage::before { animation: none; } }
 
   /* Pages: one view at a time, chosen by the URL hash */
   .page { display: none; }
@@ -330,9 +327,6 @@
       <g transform="rotate(-18 100 100)"><path class="mv-draw mv-front" d="M8 100 A92 30 0 0 0 192 100" fill="none" stroke="#ffffff" stroke-opacity=".7" stroke-width="1.5"/></g>
       <g class="mv-node" clip-path="url(#mv-front-half)"><g transform="rotate(-18 100 100)"><circle r="5" fill="#7fa6e0"><animateMotion dur="9s" repeatCount="indefinite" path="M8 100 A92 30 0 1 1 192 100 A92 30 0 1 1 8 100"/></circle></g></g>
     </svg>
-    <a class="scroll-cue" href="#services" aria-label="Enter the site">
-      <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    </a>
   </section>
 
   <section id="services" class="page" aria-labelledby="services-h">
