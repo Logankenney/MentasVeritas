@@ -214,31 +214,32 @@
     .cycle-stages .k6 { right: calc(50% + 9.4rem); top: 10.9rem; width: calc(50% - 9.4rem); transform: translateY(-50%); text-align: right; }
   }
   @media (prefers-reduced-motion: no-preference) {
-    /* One pass of about twenty seconds, replayed each time the page is opened (Logan 2026-11-26: no "First we…" cue, faster). Per stage: the orb and its name,
-       a line about it in the centre, and when that has faded the next piece of the circle draws. No ring is visible until the work moves forward. */
+    /* One pass of about twenty-two seconds, replayed each time the page is opened (Logan 2026-11-26: no "First we…" cue, faster; the centre line fades in
+       first and holds before anything moves). Per stage: the orb and its name, a line about it in the centre, and when that has faded the next piece of the
+       circle draws. No ring is visible until the work moves forward. */
     .cycle-desc { animation: cyc-desc 2s ease both; }
     .cycle-orb, .cycle-stages li, .cycle-full, .cycle-node { animation: fadein .6s ease both; }
     .cycle-arc { stroke-dasharray: 116 116; animation: cyc-draw .9s cubic-bezier(.4,0,.2,1) both; }
-    .cycle-orb.k1, .cycle-stages .k1 { animation-delay: .3s; }
-    .cycle-desc.k1 { animation-delay: .6s; }
-    .cycle-arc.a1 { animation-delay: 2.6s; }
-    .cycle-orb.k2, .cycle-stages .k2 { animation-delay: 3.4s; }
-    .cycle-desc.k2 { animation-delay: 3.7s; }
-    .cycle-arc.a2 { animation-delay: 5.7s; }
-    .cycle-orb.k3, .cycle-stages .k3 { animation-delay: 6.5s; }
-    .cycle-desc.k3 { animation-delay: 6.8s; }
-    .cycle-arc.a3 { animation-delay: 8.8s; }
-    .cycle-orb.k4, .cycle-stages .k4 { animation-delay: 9.6s; }
-    .cycle-desc.k4 { animation-delay: 9.9s; }
-    .cycle-arc.a4 { animation-delay: 11.9s; }
-    .cycle-orb.k5, .cycle-stages .k5 { animation-delay: 12.7s; }
-    .cycle-desc.k5 { animation-delay: 13s; }
-    .cycle-arc.a5 { animation-delay: 15s; }
-    .cycle-orb.k6, .cycle-stages .k6 { animation-delay: 15.8s; }
-    .cycle-desc.k6 { animation-delay: 16.1s; }
-    .cycle-arc.a6 { animation-delay: 18.1s; animation-duration: 1s; }
-    .cycle-full { animation-delay: 19.2s; animation-duration: .8s; }
-    .cycle-node { animation-delay: 19.9s; }
+    .cycle-desc.k1 { animation-delay: .2s; animation-duration: 4.2s; }
+    .cycle-orb.k1, .cycle-stages .k1 { animation-delay: 2.4s; }
+    .cycle-arc.a1 { animation-delay: 4.4s; }
+    .cycle-orb.k2, .cycle-stages .k2 { animation-delay: 5.2s; }
+    .cycle-desc.k2 { animation-delay: 5.5s; }
+    .cycle-arc.a2 { animation-delay: 7.5s; }
+    .cycle-orb.k3, .cycle-stages .k3 { animation-delay: 8.3s; }
+    .cycle-desc.k3 { animation-delay: 8.6s; }
+    .cycle-arc.a3 { animation-delay: 10.6s; }
+    .cycle-orb.k4, .cycle-stages .k4 { animation-delay: 11.4s; }
+    .cycle-desc.k4 { animation-delay: 11.7s; }
+    .cycle-arc.a4 { animation-delay: 13.7s; }
+    .cycle-orb.k5, .cycle-stages .k5 { animation-delay: 14.5s; }
+    .cycle-desc.k5 { animation-delay: 14.8s; }
+    .cycle-arc.a5 { animation-delay: 16.8s; }
+    .cycle-orb.k6, .cycle-stages .k6 { animation-delay: 17.6s; }
+    .cycle-desc.k6 { animation-delay: 17.9s; }
+    .cycle-arc.a6 { animation-delay: 19.9s; animation-duration: 1s; }
+    .cycle-full { animation-delay: 21s; animation-duration: .8s; }
+    .cycle-node { animation-delay: 21.7s; }
     @keyframes cyc-desc { 0% { opacity: 0; } 16%, 82% { opacity: 1; } 100% { opacity: 0; } }
     @keyframes cyc-draw { from { stroke-dashoffset: 116; } to { stroke-dashoffset: 0; } }
   }
